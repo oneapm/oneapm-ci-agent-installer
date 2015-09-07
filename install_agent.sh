@@ -87,7 +87,14 @@ fi
 if [ $OS = "RedHat" ]; then
     echo -e "\033[34m\n* Installing YUM sources for OneAPM\n\033[0m"
 
-    $sudo_cmd sh -c "echo -e '[oneapm-ci-agent]\nname = OneAPM, Inc.\nbaseurl = http://yum.oneapm.com/\nenabled=1\ngpgcheck=0\npriority=1' > /etc/yum.repos.d/oneapm-ci-agent.repo"
+    UNAME_M=$(uname -m)
+    if [ "$UNAME_M"  == "i686" -o "$UNAME_M"  == "i386" -o "$UNAME_M"  == "x86" ]; then
+        ARCHI="i386"
+    else
+        ARCHI="x86_64"
+    fi
+
+    $sudo_cmd sh -c "echo -e '[oneapm-ci-agent]\nname = OneAPM, Inc.\nbaseurl = http://yum.oneapm.com/$ARCHI/\nenabled=1\ngpgcheck=0\npriority=1' > /etc/yum.repos.d/oneapm-ci-agent.repo"
 
     printf "\033[34m* Installing the OneAPM CI Agent package\n\033[0m\n"
 
