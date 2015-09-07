@@ -167,10 +167,7 @@ eval $restart_cmd
 # Wait for metrics to be submitted by the forwarder
 printf "\033[32m
 Your Agent has started up for the first time. We're currently verifying that
-data is being submitted. You should see your Agent show up in OneAPM shortly
-at:
-
-    https://cloud.oneapm.com/tpm/infrastructure\033[0m
+data is being submitted.\033[0m
 
 Waiting for metrics..."
 
