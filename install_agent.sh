@@ -73,16 +73,6 @@ else
     sudo_cmd='sudo'
 fi
 
-CIBASE=false
-# Python Detection
-has_python=$(which python || echo "no")
-if [ "$has_python" != "no" ]; then
-    PY_VERSION=$(python -c 'import sys; print("{0}.{1}".format(sys.version_info[0], sys.version_info[1]))' 2>/dev/null || echo "TOO OLD")
-    if [ "$PY_VERSION" = "TOO OLD" ]; then
-        CIBASE=true
-    fi
-fi
-
 # Install the necessary package sources
 if [ $OS = "RedHat" ]; then
     echo -e "\033[34m\n* Installing YUM sources for OneAPM\n\033[0m"
@@ -98,13 +88,6 @@ if [ $OS = "RedHat" ]; then
 
     printf "\033[34m* Installing the OneAPM CI Agent package\n\033[0m\n"
 
-    if $CIBASE; then
-        CI_BASE_INSTALLED=$(yum list installed oneapm-ci-agent > /dev/null 2>&1 || echo "no")
-        if [ "$CI_BASE_INSTALLED" != "no" ]; then
-            echo -e "\033[34m\n* Uninstall oneapm-ci-agent\n\033[0m"
-            $sudo_cmd yum -y remove oneapm-ci-agent
-        fi
-    fi
     $sudo_cmd yum -y --disablerepo='*' --enablerepo='oneapm-ci-agent' install oneapm-ci-agent
 elif [ $OS = "Debian" ]; then
     printf "\033[34m\n* Installing APT package sources for OneAPM\n\033[0m\n"
