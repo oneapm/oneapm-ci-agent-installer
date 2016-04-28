@@ -1,1 +1,1 @@
-# oneapm-ci-agent-installer
+# DEPRECATED
